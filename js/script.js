@@ -17,35 +17,24 @@ function estableceDificultad() {        // Esta función permite al usuario eleg
         if (dificultad == "1" || dificultad == "2" || dificultad == "3" || dificultad == "4" || dificultad == null) {
             switch (dificultad) {
                 case "1":
-                    cifras = 2;
-                    desde = 10;
-                    hasta = 99;
-                    break;
                 case "2":
-                    cifras = 3;
-                    desde = 100;
-                    hasta = 999;
-                    break;
                 case "3":
-                    cifras = 4;
-                    desde = 1000;
-                    hasta = 9999;
-                    maxIntentos = 30;
+                    cifras = parseInt(dificultad) + 1;      //establece de cuantas cifras va a ser el numero
                     break;
                 case "4":
                     do {
-                        cifras = parseInt(prompt("¿De cuántas cifras quieres que sea el número?\n\nEl minimo es 1 y el maximo 10"));
-                        if (cifras < 1 || cifras > 10) {
-                            alert("Introdusca un valor entre 1 y 10")
+                        cifras = parseInt(prompt("¿De cuántas cifras quieres que sea el número?\n\nEl minimo es 1 y el maximo 6"));
+                        if (cifras < 1 || cifras > 6) {
+                            alert("Introdusca un valor entre 1 y 6")
                         }
-                    } while (isNaN(cifras) || cifras < 1 || cifras > 10);
-                    desde = Math.pow(10, cifras - 1); // en base a la cifra seleccionada crea el minimo
-                    hasta = Math.pow(10, cifras) - 1; // en base a la cifra seleccionada crea el maximo
+                    } while (isNaN(cifras) || cifras < 1 || cifras > 6);
                     do {
                         maxIntentos = parseInt(prompt("¿Cuántos intentos queres tener?"));
                     } while (isNaN(maxIntentos) || maxIntentos < 1);
                     break;
             }
+            desde = Math.pow(10, cifras - 1); // en base a la cifra seleccionada crea el numero minimo que acepta 
+            hasta = Math.pow(10, cifras) - 1; // en base a la cifra seleccionada crea el numero maximo que acepta
             break;
         } else {
             alert("Por favor, ingrese un valor válido (1, 2, 3, 4).");
@@ -65,7 +54,7 @@ function creandoAleatorio() {       // Esta función genera un número aleatorio
 function entradaAnalisis() {        // Esta función permite al jugador realizar cierta cantidad de intentos y recibir pistas sobre sus aciertos
     while (intentos < maxIntentos && aciertos < numeroAleatorio.length) {
         while (true) {
-            resultado = prompt("ESCRIBA UN NUMERO DEL " + desde + " al " + hasta + "\n\nHistorial: " + historial.join(' - ') + "\nIntentos disponibles: " + (maxIntentos - intentos) + "\nAciertos: " + mensajePista() + "\n\nSi necesitas una explicacion detallada escribi 'AYUDA'");
+            resultado = prompt("ESCRIBA UN NUMERO DEL " + desde + " al " + hasta + "\n\nHistorial: " + historial.join(' - ') + "\nIntentos disponibles: " + (maxIntentos - intentos) + "\nAciertos: " + mensajePista() + "\n\nSi necesitas una explicacion detallada escribi 'AYUDA'\nPara rendirse presione 'Cancelar'");
             if ((resultado >= desde && resultado <= hasta) || resultado == null) {
                 break;
             } else if (resultado.toLowerCase() == "ayuda") {
@@ -89,6 +78,9 @@ function entradaAnalisis() {        // Esta función permite al jugador realizar
                 if (numeroAleatorio[i] == resultadoAnalizar[i]) {
                     aciertos++
                 }
+            }
+            while (historial.length > 13) {  //hace que al llegar al elemento 13 en el array se borre el historial mas viejo
+                historial.shift()
             }
         }
     }
