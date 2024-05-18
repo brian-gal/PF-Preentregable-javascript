@@ -55,10 +55,12 @@ function entradaAnalisis() {        // Esta función permite al jugador realizar
     while (intentos < maxIntentos && aciertos < numeroAleatorio.length) {
         while (true) {
             resultado = prompt("ESCRIBA UN NUMERO DEL " + desde + " al " + hasta + "\n\nHistorial: " + historial.join(' - ') + "\nIntentos disponibles: " + (maxIntentos - intentos) + "\nAciertos: " + mensajePista() + "\n\nSi necesitas una explicacion detallada escribi 'AYUDA'\nPara rendirse presione 'Cancelar'");
-            if ((resultado >= desde && resultado <= hasta) || resultado == null) {
+            if ((resultado >= desde && resultado <= hasta && historial.includes(resultado.toString()) == false) || resultado == null) {
                 break;
             } else if (resultado.toLowerCase() == "ayuda") {
                 alert("Ejemplo: Si el número secreto es 42 y eliges el número 27, no recibirás ninguna pista de aciertos, ya que ninguna de las cifras adivinadas es la correcta en la posición correcta. Por otro lado, si eliges el número 47, recibirás una pista que indica que tienes 1 acierto en la posición correcta, lo que significa que has adivinado correctamente la cifra 4 en la posición correcta. Sin embargo, no sabes cuál es la cifra correcta, pero sabes que del número que elegiste hay esa cantidad de aciertos. Usa las pistas a tu favor: Con la información de las pistas, puedes intentar deducir las cifras correctas en la posición correcta. Por ejemplo, si tienes un acierto en la posición correcta para el número 47, puedes intentar cambiar la cifra 7 por otra para ver si obtienes más aciertos. Continúa adivinando: Continúa eligiendo números y recibiendo pistas hasta que adivines todas las cifras en la posición correcta o te quedes sin intentos.")
+            } else if (historial.includes(resultado.toString())) {
+                alert("El numero ingresado ya fue utilizado anteriormente")
             }
             else {
                 alert("Por favor, ingrese un número válido de " + desde + " al " + hasta + ".");
@@ -145,6 +147,7 @@ function flujoJuego() {          // Esta función controla el flujo del juego, p
             } else {
                 aciertos = 0;            // restablesco el valor
                 intentos = 0;            // restablesco el valor
+                maxIntentos = 20
                 numeroAleatorio = [];    // restablesco el valor 
                 historial = [];          // restablesco el valor
                 creandoAleatorio();
