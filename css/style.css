@@ -1,30 +1,185 @@
 body {
-    background-color: black;
-    display: flex;
-    justify-content: center;
-    /* Centra horizontalmente */
-    align-items: center;
-    /* Centra verticalmente */
-    height: 100vh;
-    /* Establece la altura del body al 100% de la ventana */
+    background-color: #000;
+    /* Fondo oscuro */
+    color: #fff;
+    /* Texto en blanco */
+    font-family: Arial, sans-serif;
     margin: 0;
-    /* Elimina el margen por defecto del body */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 main {
-    width: 100%;
-    margin-left: 30px;
-    margin-right: 30px;
+    background-color: #333;
+    /* Fondo más claro para el main */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 800px;
 }
 
 h1 {
+    color: #fff;
+    /* Texto del h1 en blanco */
+}
+
+#pantallaFinal h3 {
     text-align: center;
-    color: aliceblue;
-    font-size: 40px;
+}
+
+#buttonPlay {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 1.5em;
+    background-color: #f00;
+    /* Color rojo para el botón */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#buttonPlay:hover {
+    background-color: #c00;
+    /* Color más oscuro al pasar el ratón */
 }
 
 h2 {
+    margin-top: 0;
     text-align: center;
-    color: aliceblue;
-    font-size: 25px;
+}
+
+button,
+input[type="button"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 1em;
+    background-color: #555;
+    /* Fondo para los botones de dificultad */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Fondo más claro al pasar el ratón por los botones menos el de comenzar */
+button:hover,
+input[type="button"]:hover {
+    background-color: #777;
+}
+
+/* usamos esto en js */
+.ocultar {
+    display: none;
+}
+
+label,
+input[type="number"] {
+    display: block;
+    margin: 10px 0;
+    width: 100%;
+}
+
+input[type="number"] {
+    box-sizing: border-box;
+    /* Incluye el padding dentro del tamaño total */
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #555;
+}
+
+input::placeholder {
+    color: #999;
+    font-style: italic;
+    padding-left: 10px;
+}
+
+#game-content h2,
+#game-content p {
+    margin: 10px 0;
+}
+
+#game-content {
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+
+
+.instrucciones button,
+.instrucciones button {
+    display: inline-flex;
+    align-items: center;
+    color: #ffffff;
+
+    /* Color azul para el enlace */
+    text-decoration: none;
+    font-size: 1.2em;
+    /* Tamaño de fuente mayor */
+    padding: 10px;
+
+    /* Borde azul */
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    /* Transiciones suaves */
+    justify-content: center;
+}
+
+.instrucciones button:hover {
+    background-color: rgb(57, 57, 255);
+    /* Fondo azul al pasar el ratón */
+    color: #fff;
+    /* Texto blanco al pasar el ratón */
+    border-color: #fff;
+    /* Borde blanco al pasar el ratón */
+
+}
+
+.inactive {
+    background-color: rgb(90, 90, 245);
+    border: 1px solid #00f;
+}
+
+.active {
+    background-color: #00f;
+    border: 1px solid #fff;
+}
+
+.instrucciones i {
+    margin-right: 10px;
+    /* Espacio entre el icono y el texto */
+    font-size: 1.5em;
+    /* Tamaño mayor para el icono */
+}
+
+#advertenciaResultado,
+#advertenciaCifras,
+#advertenciaMaxIntentos {
+    color: red;
+    font-weight: bold;
+}
+
+.gift {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-bottom: 20px;
+}
+
+.gift img {
+    max-width: 100%;
+    max-height: 100%;
 }

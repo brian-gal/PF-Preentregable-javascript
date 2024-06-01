@@ -6,19 +6,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego</title>
     <link rel="stylesheet" href="./css/style.css">
-    <script async src="./js/script.js"></script>
+    <script defer src="./js/dom.js"></script>
+    <script defer src="./js/logica.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
-    <main>
+    <header>
         <h1>"Un Acierto" - Juego de Adivinanzas</h1>
-        <h2>
-            En este juego, tu objetivo es adivinar un número aleatorio. La única pista que recibirás son los aciertos,
-            que ocurren cuando un número que has elegido coincide con el número aleatorio y está en la misma posición.
-            Por ejemplo, si el número secreto es 150 y elijes 160, tendrás 2 aciertos porque el 1 y el 0 están en la
-            posición correcta. <br>
-            Elige la dificultad del juego y comienza a adivinar. ¡Buena suerte!</h2>
+    </header>
+    <main>
+
+        <section id="pantalla1">
+            <div id="pantallaFinal"></div>
+            <audio id="miAudio" src="" preload="auto"></audio>
+            <div class="gift">
+                <img id="gifImg" src="">
+            </div>
+            <button id="buttonPlay">Comenzar Juego</button>
+        </section>
+
+        <section>
+            <div id="pantalla2" class="ocultar">
+                <h2>Elija la dificultad</h2>
+                <button>Fácil</button>
+                <button>Medio</button>
+                <button>Difícil</button>
+                <button>Personalizado</button>
+            </div>
+            <div id="pantalla3" class="ocultar">
+                <label for="cifras">¿De cuántas cifras quieres que sea el número?</label>
+                <input type="number" id="cifras" placeholder="El mínimo es 1 y el maximo 6" min="1" max="6">
+                <p id="advertenciaCifras"></p>
+                <label for="intentos">¿Cuántos intentos quieres tener?</label>
+                <input type="number" id="maxIntentos" placeholder="El mínimo es 1" min="1">
+                <p id="advertenciaMaxIntentos"></p>
+                <input type="button" id="buttonPersonalizado" value="Confirmar">
+            </div>
+        </section>
+
+        <section id="pantalla4" class="ocultar">
+            <div id="game-content">
+                <h2 id="game-titulo"></h2>
+                <p id="game-historial"></p>
+                <p id="game-Intentos"></p>
+                <p id="game-Aciertos"></p>
+            </div>
+            <div>
+                <input type="number" id="resultado" placeholder="Ingrese un numero">
+                <p id="advertenciaResultado"></p>
+                <input type="button" id="submitResultado" value="Confirmar">
+            </div>
+        </section>
+
+        <div class="instrucciones">
+            <button id="buttonInstrucciones" class="inactive"><i class="bi bi-book"></i> Leer las Instrucciones</button>
+        </div>
+
+        <section id="pantalla5" class="ocultar">
+            <h2>Instrucciones:</h2>
+            <p>Tu objetivo es adivinar un número aleatorio dentro de un número limitado de intentos. ¡Demuestra tu
+                habilidad para descifrar el código secreto y gana!</p>
+            <ol>
+                <li><strong>Elige tu dificultad:</strong>
+                    <ul>
+                        <li>Fácil: Un número de 2 cifras y 20 intentos.</li>
+                        <li>Medio: Un número de 3 cifras y 20 intentos.</li>
+                        <li>Difícil: Un número de 4 cifras y 20 intentos.</li>
+                        <li>Personalizado: Decide el número de cifras (entre 1 y 6) y la cantidad de intentos sin
+                            límite.</li>
+                    </ul>
+                </li>
+                <li><strong>Comienza a Adivinar:</strong>
+                    <ul>
+                        <li>Una vez seleccionada la dificultad, comienza a ingresar tus números.</li>
+                        <li>Ingresa un número y comprueba si coincide con el número secreto.</li>
+                    </ul>
+                </li>
+                <li><strong>Recibe Pistas:</strong>
+                    <ul>
+                        <li>Después de cada intento, recibirás pistas sobre tu suposición.</li>
+                        <li>Te dira cuantas cifras del numero ingresado estan en su posicion correcta.</li>
+                        <li>Te dira cuantas cifras del numero ingresado estan son incorrectas.</li>
+                    </ul>
+                </li>
+                <li><strong>Usa las Pistas a tu Favor:</strong>
+                    <ul>
+                        <li>Utiliza las pistas para ajustar tus próximos intentos y acercarte al número secreto.</li>
+                    </ul>
+                </li>
+                <li><strong>Rendirse:</strong>
+                    <ul>
+                        <li>En cualquier momento, puedes optar por rendirte y descubrir el número secreto.</li>
+                    </ul>
+                </li>
+                <li><strong>¡Gana!:</strong>
+                    <ul>
+                        <li>Si adivinas el número dentro del límite de intentos, ¡ganarás el juego!. Pero si se te
+                            acaban los intentos Perderas</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h2>Consejo:</h2>
+            <p>Utiliza estratégicamente las pistas para reducir el número de posibilidades y aumentar tus probabilidades
+                de éxito.</p>
+
+            <p>¡Buena suerte y que comience la aventura de adivinar números!</p>
+        </section>
     </main>
+    <footer>
+        <button id="buttonRendirse" class="ocultar">Rendirse</button>
+    </footer>
+
 </body>
 
 </html>
