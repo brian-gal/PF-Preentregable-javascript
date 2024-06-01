@@ -267,6 +267,7 @@ miAudio.addEventListener('ended', function () {
 function detenerAudio() {
     miAudio.pause();
     miAudio.currentTime = 0; // Reinicia el audio al principio
+    miAudio.src = '';
 }
 
 
