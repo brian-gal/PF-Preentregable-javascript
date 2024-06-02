@@ -54,6 +54,7 @@ for (let i = 0; i < buttonDificultad.length; i++) {
             hasta = Math.pow(10, cifras) - 1; // en base a la cifra seleccionada crea el numero maximo que acepta 
             actualizarTexto(desde, hasta);
             creandoAleatorio()
+            document.getElementById('resultado').focus();
         }
         ocultarInstrucciones()
     });
@@ -81,6 +82,7 @@ buttonPersonalizado.addEventListener('click', () => {
         actualizarTexto(desde, hasta);
         creandoAleatorio()
         cambiarVisibilidad(pantalla4, pantalla3);
+        document.getElementById('resultado').focus();
         buttonRendirse.classList.remove('ocultar');
     }
     ocultarInstrucciones()
@@ -158,12 +160,12 @@ function actualizarTexto() {
     gameTitulo.textContent = `Escriba un número entre ${desde} y ${hasta}`;
     gameHistorial.textContent = mensajeHistorial();
     gameIntentos.textContent = `Intentos Disponibles: ${maxIntentos - intentos}`;
-    gameAciertos.textContent = `Pista: ` + mensajePista();
+    gameAciertos.textContent = mensajePista();
 }
 
 function mensajeHistorial() {
     if (historial[0] == undefined) {
-        return "Historial: Escriba un numero para comenzar";
+        return "El historial Se encuentra vacio";
     }
     else {
         return `Historial: ${historial.join(', ')}`;
@@ -180,13 +182,13 @@ function mensajePista() { //corregimos la palabra para que quede bien el texto e
         if (aciertos == 1) {
             mensaje2 = " cifra esta";
         }
-        return aciertos + mensaje2 + " en su posicion y " + (numeroAleatorio.length - aciertos) + mensaje + " mal";
+        return `Pista: ` + aciertos + mensaje2 + " en su posicion y " + (numeroAleatorio.length - aciertos) + mensaje + " mal";
     }
     else if (historial[0] == undefined) {
-        return "Escriba un numero para comenzar";
+        return "Sin pistas hasta que ingrese un numero";
     }
     else {
-        return "Ninguna cifra esta en su posicion correcta";
+        return "Pista: Ninguna cifra esta en su posicion correcta";
     }
 }
 
@@ -220,15 +222,16 @@ function entradaAnalisis() {        // Esta función permite al jugador realizar
 function finalJuego() {
     if (aciertos == cifras) {
         mostrarMensajeFinal(`Descubriste el número ${numeroAleatorio.join('')}, con tan solo ${intentos} intentos."`, "¡Felicidades, has Ganado!");
-        img.src = './assets/videoGanador.gif';
         miAudio.src = './assets/audioVideoGanador.m4a';
         reproducirAudio()
+        img.src = './assets/videoGanador.gif';
 
     } else if (intentos >= maxIntentos) {
         mostrarMensajeFinal(`Lo siento, has agotado tus intentos. El número era el ${numeroAleatorio.join('')}.`, "GAME OVER");
-        img.src = './assets/fotoPerdedor.jpg';
         miAudio.src = './assets/audioPerdedor.m4a';
         reproducirAudio()
+        img.src = './assets/fotoPerdedor.jpg';
+    
     } else {
 
     }
@@ -256,19 +259,11 @@ function reproducirAudio() {
     miAudio.volume = 0.5; // Establece el volumen al 50%
     miAudio.currentTime = 0; // Reinicia el audio al principio
     miAudio.play();
+
 }
-
-// Repetir el audio continuamente
-miAudio.addEventListener('ended', function () {
-    reproducirAudio();
-});
-
 // Función para detener el audio
 function detenerAudio() {
     miAudio.pause();
     miAudio.currentTime = 0; // Reinicia el audio al principio
     miAudio.src = '';
 }
-
-
-

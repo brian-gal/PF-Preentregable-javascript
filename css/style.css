@@ -1,15 +1,12 @@
 body {
     background-color: #000;
-    /* Fondo oscuro */
     color: #fff;
-    /* Texto en blanco */
     font-family: Arial, sans-serif;
     margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
 }
 
 header {
@@ -19,8 +16,7 @@ header {
 
 main {
     background-color: #333;
-    /* Fondo más claro para el main */
-    padding: 20px;
+    padding: 20px 20px 0;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     width: 90%;
@@ -28,8 +24,15 @@ main {
 }
 
 h1 {
-    color: #fff;
-    /* Texto del h1 en blanco */
+    color: #ff8e00; /* Color naranja */
+    font-size: 3em; /* Tamaño de fuente grande */
+    text-align: center; /* Centramos el texto */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para dar profundidad */
+    padding: 20px; /* Espaciado interno */
+    margin-bottom: 20px; /* Espaciado inferior */
+    font-family: 'Montserrat', sans-serif; /* Fuente elegante */
+    border-bottom: 2px solid #ff8e00; /* Línea decorativa inferior */
+    letter-spacing: 2px; /* Espaciado entre letras */
 }
 
 #pantallaFinal h3 {
@@ -42,16 +45,15 @@ h1 {
     padding: 15px;
     font-size: 1.5em;
     background-color: #f00;
-    /* Color rojo para el botón */
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 #buttonPlay:hover {
     background-color: #c00;
-    /* Color más oscuro al pasar el ratón */
 }
 
 h2 {
@@ -59,28 +61,44 @@ h2 {
     text-align: center;
 }
 
-button,
-input[type="button"] {
+button, #pantalla3 input[type="button"] {
     display: block;
     width: 100%;
     padding: 10px;
     margin: 5px 0;
     font-size: 1em;
     background-color: #555;
-    /* Fondo para los botones de dificultad */
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-/* Fondo más claro al pasar el ratón por los botones menos el de comenzar */
 button:hover,
 input[type="button"]:hover {
     background-color: #777;
 }
 
-/* usamos esto en js */
+input[type="button"]#submitResultado {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px; /* Espacio arriba del botón */
+    font-size: 1.5em;
+    background-color: #f00; /* Color rojo para el fondo */
+    color: #fff; /* Texto en blanco */
+    border: 2px solid #f00; /* Borde rojo */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s; /* Transiciones suaves */
+}
+
+input[type="button"]#submitResultado:hover {
+    background-color: #c00; /* Color más oscuro al pasar el ratón */
+    border-color: #c00; /* Borde más oscuro al pasar el ratón */
+}
+
 .ocultar {
     display: none;
 }
@@ -94,7 +112,6 @@ input[type="number"] {
 
 input[type="number"] {
     box-sizing: border-box;
-    /* Incluye el padding dentro del tamaño total */
     padding: 10px;
     font-size: 1em;
     border-radius: 5px;
@@ -107,44 +124,60 @@ input::placeholder {
     padding-left: 10px;
 }
 
-#game-content h2,
+#game-content {
+    margin: 0 0 15px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    color: #ddd;
+    background-color: #333; /* Fondo más oscuro */
+}
+
 #game-content p {
     margin: 10px 0;
+    color: #ccc;
 }
 
-#game-content {
-    margin-bottom: 15px;
-    margin-top: 20px;
+#game-content #game-historial,
+#game-content #game-Intentos,
+#game-content #game-Aciertos {
+    background-color: #444; /* Fondo común para todos */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
+#game-content #game-historial .historial-titulo,
+#game-content #game-Intentos .intentos-titulo,
+#game-content #game-Aciertos .aciertos-titulo {
+    font-weight: bold;
+    color: #ff8e00; /* Color naranja */
+    font-size: 1.1em;
+}
 
-.instrucciones button,
+.instrucciones {
+    text-align: center;
+    margin: 5px 0 10px;
+}
+
 .instrucciones button {
     display: inline-flex;
     align-items: center;
     color: #ffffff;
-
-    /* Color azul para el enlace */
+    background-color: rgb(90, 90, 245);
+    border: 1px solid #00f;
     text-decoration: none;
     font-size: 1.2em;
-    /* Tamaño de fuente mayor */
     padding: 10px;
-
-    /* Borde azul */
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    /* Transiciones suaves */
     justify-content: center;
 }
 
 .instrucciones button:hover {
     background-color: rgb(57, 57, 255);
-    /* Fondo azul al pasar el ratón */
     color: #fff;
-    /* Texto blanco al pasar el ratón */
     border-color: #fff;
-    /* Borde blanco al pasar el ratón */
-
 }
 
 .inactive {
@@ -159,15 +192,13 @@ input::placeholder {
 
 .instrucciones i {
     margin-right: 10px;
-    /* Espacio entre el icono y el texto */
     font-size: 1.5em;
-    /* Tamaño mayor para el icono */
 }
 
 #advertenciaResultado,
 #advertenciaCifras,
 #advertenciaMaxIntentos {
-    color: red;
+    color: rgb(255, 208, 0);
     font-weight: bold;
 }
 
@@ -183,3 +214,45 @@ input::placeholder {
     max-width: 100%;
     max-height: 100%;
 }
+
+#pantalla5 {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    color: #ddd;
+}
+
+#pantalla5 h2 {
+    color: #fff;
+}
+
+#pantalla5 p,
+#pantalla5 li {
+    margin: 10px 0;
+    color: #ccc;
+}
+
+#pantalla5 ol {
+    padding-left: 20px;
+}
+
+#pantalla5 ol li {
+    margin: 10px 0;
+}
+
+#pantalla5 ul {
+    margin: 10px 0 0 20px;
+}
+
+#pantalla5 h3, #pantalla5 h4 {
+    text-align: center;
+    color: #ff0;
+    margin-top: 20px;
+}
+
+#buttonRendirse {
+    background-color: #f00;
+}
+
+
