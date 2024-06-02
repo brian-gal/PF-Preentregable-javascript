@@ -215,7 +215,7 @@ input::placeholder {
     max-height: 100%;
 }
 
-#pantalla5 {
+#pantalla5, #pantalla6 {
     background-color: #444;
     padding: 20px;
     border-radius: 10px;
@@ -223,7 +223,7 @@ input::placeholder {
     color: #ddd;
 }
 
-#pantalla5 h2 {
+#pantalla5 h2, #pantalla6 h2 {
     color: #fff;
 }
 
@@ -251,7 +251,7 @@ input::placeholder {
     margin-top: 20px;
 }
 
-#buttonRendirse {
+#buttonRendirse, #buttonConteo {
     background-color: #f00;
 }
 
