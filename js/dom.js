@@ -1,27 +1,4 @@
-let resultadoAnalizar = [];
-let numeroAleatorio = [];
-let historial = [];
-let resultado;
-let aciertos = 0;
-let maxIntentos = 20;
-let intentos = 0;
-let desde;
-let hasta;
-let cifras;;
-
-function restableceVariables() {
-    resultadoAnalizar = [];
-    numeroAleatorio = [];
-    historial = [];
-    resultado = undefined;
-    aciertos = 0;
-    maxIntentos = 20;
-    intentos = 0;
-    desde = undefined;
-    hasta = undefined;
-    cifras = undefined;
-}
-
+// Variables para almacenar referencias a elementos del DOM
 const pantalla1 = document.getElementById('pantalla1');
 const pantalla2 = document.getElementById('pantalla2');
 const pantalla3 = document.getElementById('pantalla3');
@@ -33,10 +10,32 @@ const advertenciaResultado = document.getElementById('advertenciaResultado');
 const advertenciaCifras = document.getElementById('advertenciaCifras');
 const advertenciaMaxIntentos = document.getElementById('advertenciaMaxIntentos');
 
+// Variables para botones y elementos de entrada
 const buttonPlay = document.getElementById('buttonPlay');
+const buttonDificultad = document.querySelectorAll('#pantalla2 button');
+const buttonPersonalizado = document.getElementById('buttonPersonalizado');
+const inputCifras = document.getElementById('cifras')
+const inputMaxIntentos = document.getElementById('maxIntentos')
+const buttonInstrucciones = document.getElementById('buttonInstrucciones');
+const buttonConteo = document.getElementById('buttonConteo');
+const buttonResultado = document.getElementById('submitResultado');
+const inputResultado = document.getElementById('resultado');
+const buttonRendirse = document.getElementById('buttonRendirse');
+const img = document.getElementById('gifImg');
+const miAudio = document.getElementById('miAudio');
+
+// Variables para mostrar información del juego en el DOM
+const gameTitulo = document.getElementById('game-titulo');
+const gameHistorial = document.getElementById('game-historial');
+const gameIntentos = document.getElementById('game-Intentos');
+const gameAciertos = document.getElementById('game-Aciertos');
+const historialGanadas = document.getElementById('historialGanadas');
+const historialPerdidas = document.getElementById('historialPerdidas');
+
+
+// Agregando event listeners a los botones
 buttonPlay.addEventListener('click', iniciarJuego);
 
-const buttonDificultad = document.querySelectorAll('#pantalla2 button');
 buttonDificultad.forEach((button, i) => {
     button.addEventListener('click', () => {
         cifras = i + 2;
@@ -57,17 +56,19 @@ buttonDificultad.forEach((button, i) => {
     });
 });
 
-const buttonPersonalizado = document.getElementById('buttonPersonalizado');
 buttonPersonalizado.addEventListener('click', () => {
     cifras = parseInt(document.getElementById('cifras').value, 10);
     maxIntentos = parseInt(document.getElementById('maxIntentos').value, 10);
 
-    advertenciaCifras.textContent = cifras < 1 || cifras > 6 ? 'Por favor, escriba un numero entre 1 y 6' : '';
-    advertenciaMaxIntentos.textContent = maxIntentos < 1 ? 'Por favor, escriba un numero mayor a 1' : '';
+    // Valida las entradas personalizadas del usuario
+    advertenciaCifras.textContent = cifras < 1 || cifras > 6 || (isNaN(cifras)) ? 'Por favor, escriba un numero entre 1 y 6' : inputMaxIntentos.focus();
+    advertenciaMaxIntentos.textContent = maxIntentos < 1 || (isNaN(maxIntentos)) ? 'Por favor, escriba un numero mayor a 1' : inputCifras.focus();
 
+    // Si las entradas son válidas, actualiza los rangos y comienza el juego
     if (cifras >= 1 && cifras <= 6 && maxIntentos >= 1) {
         desde = Math.pow(10, cifras - 1);
         hasta = Math.pow(10, cifras) - 1;
+
         actualizarTexto(desde, hasta);
         creandoAleatorio();
         cambiarVisibilidad(pantalla4, pantalla3);
@@ -77,75 +78,24 @@ buttonPersonalizado.addEventListener('click', () => {
     ocultarInstrucciones(buttonInstrucciones, pantalla5);
 });
 
-const buttonInstrucciones = document.getElementById('buttonInstrucciones');
 buttonInstrucciones.addEventListener('click', () => {
     toggleInstrucciones(buttonInstrucciones, pantalla5);
 });
 
-const buttonConteo = document.getElementById('buttonConteo');
 buttonConteo.addEventListener('click', () => {
     toggleInstrucciones(buttonConteo, pantalla6);
 });
 
-const buttonResultado = document.getElementById('submitResultado');
-const inputResultado = document.getElementById('resultado');
+
 
 buttonResultado.addEventListener('click', procesarResultado);
 inputResultado.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') procesarResultado();
 });
 
-const buttonRendirse = document.getElementById('buttonRendirse');
 buttonRendirse.addEventListener('click', rendirse);
 
-const img = document.getElementById('gifImg');
-const miAudio = document.getElementById('miAudio');
-
-const gameTitulo = document.getElementById('game-titulo');
-const gameHistorial = document.getElementById('game-historial');
-const gameIntentos = document.getElementById('game-Intentos');
-const gameAciertos = document.getElementById('game-Aciertos');
-const historialGanadas = document.getElementById('historialGanadas');
-const historialPerdidas = document.getElementById('historialPerdidas');
-
-function iniciarJuego() {
-    detenerAudio();
-    cambiarVisibilidad(pantalla2, pantalla1);
-    ocultarInstrucciones(buttonInstrucciones, pantalla5);
-    ocultarInstrucciones(buttonConteo, pantalla6);
-    restableceVariables();
-}
-
-function procesarResultado() {
-    resultado = inputResultado.value;
-    if (resultado > hasta || resultado < desde) {
-        advertenciaResultado.textContent = `Por favor, escriba un numero entre ${desde} y ${hasta}`;
-    } else {
-        analizarEntrada();
-        actualizarTexto();
-        verificarFinalJuego();
-        advertenciaResultado.textContent = ``;
-    }
-    inputResultado.value = '';
-}
-
-function cambiarVisibilidad(mostrar, ocultar) {
-    ocultar.classList.add('ocultar');
-    mostrar.classList.remove('ocultar');
-}
-
-function ocultarInstrucciones(button, pantalla) {
-    if (button.classList.contains('active')) {
-        toggleInstrucciones(button, pantalla);
-    }
-}
-
-function toggleInstrucciones(button, pantalla) {
-    button.classList.toggle('active');
-    button.classList.toggle('inactive');
-    pantalla.classList.toggle('ocultar');
-}
-
+// Función para actualizar la información del juego en el DOM
 function actualizarTexto() {
     gameTitulo.textContent = `Escriba un número entre ${desde} y ${hasta}`;
     gameHistorial.textContent = historial.length ? `Historial: ${historial.join(', ')}` : 'El historial se encuentra vacio';
@@ -153,6 +103,7 @@ function actualizarTexto() {
     gameAciertos.textContent = aciertos ? `Pista: ${aciertos} ${aciertos > 1 ? 'cifras estan' : 'cifra esta'} en su posicion y ${numeroAleatorio.length - aciertos} ${numeroAleatorio.length - aciertos > 1 ? 'estan' : 'esta'} mal` : 'Pista: Ninguna cifra esta en su posicion correcta';
 }
 
+// Función para actualizar el historial de partidas ganadas y perdidas en el DO
 function actualizarTextoHistorial() {
     let vecesGanadas = localStorage.getItem('vecesGanadas');
     let vecesPerdidas = localStorage.getItem('vecesPerdidas');
@@ -168,40 +119,13 @@ function actualizarTextoHistorial() {
         historialGanadas.textContent = `Has ganado un total de ${vecesGanadas} ${clave1}`;
     }
     if (!vecesPerdidas) {
-        historialGanadas.textContent = `Aun no has perdido en ninguna oportunidad`;
+        historialPerdidas.textContent = `Aun no has perdido en ninguna oportunidad`;
     } else {
         historialPerdidas.textContent = `Has perdido un total de ${vecesPerdidas} ${clave2}`;
     }
 }
 
-function creandoAleatorio() {
-    while (numeroAleatorio.length < cifras) {
-        const num = Math.floor(Math.random() * 10);
-        if (numeroAleatorio.length === 0 && num === 0) continue;
-        numeroAleatorio.push(num);
-    }
-}
-
-function analizarEntrada() {
-    resultadoAnalizar = resultado.split('').map(Number);
-    historial.push(resultado);
-    intentos++;
-
-    aciertos = resultadoAnalizar.filter((num, i) => num === numeroAleatorio[i]).length;
-
-    if (historial.length > 13) historial.shift();
-}
-
-function verificarFinalJuego() {
-    if (aciertos === cifras) {
-        actualizarConteo('vecesGanadas');
-        mostrarMensajeFinal(`Descubriste el número ${numeroAleatorio.join('')}, con tan solo ${intentos} intentos.`, '¡Felicidades, has Ganado!', './assets/audioVideoGanador.m4a', './assets/videoGanador.gif');
-    } else if (intentos >= maxIntentos) {
-        actualizarConteo('vecesPerdidas');
-        mostrarMensajeFinal(`Lo siento, has agotado tus intentos. El número era el ${numeroAleatorio.join('')}.`, 'GAME OVER', './assets/audioPerdedor.m4a', './assets/fotoPerdedor.jpg');
-    }
-}
-
+// Función para mostrar un mensaje final en el DOM al finalizar el juego
 function mostrarMensajeFinal(mensaje, mensaje2, audioSrc, imgSrc) {
     pantallaFinal.innerHTML = `<h2>${mensaje2}</h2><h3>${mensaje}</h3>`;
     cambiarVisibilidad(pantalla1, pantalla4);
@@ -213,30 +137,25 @@ function mostrarMensajeFinal(mensaje, mensaje2, audioSrc, imgSrc) {
     img.src = imgSrc;
 }
 
-function rendirse() {
-    mostrarMensajeFinal(`Que decepcion, el número era el ${numeroAleatorio.join('')}.`, 'TE HAS RENDIDO', './assets/audioPerdedor.m4a', './assets/rendirse.jpg');
-    actualizarConteo('vecesPerdidas');
+// Funcion que muestra y oculta elementos del html agregando y sacando la class
+function cambiarVisibilidad(mostrar, ocultar) {
+    ocultar.classList.add('ocultar');
+    mostrar.classList.remove('ocultar');
 }
 
-function reproducirAudio(src) {
-    miAudio.volume = 0.5;
-    miAudio.src = src;
-    miAudio.play();
-}
-
-function detenerAudio() {
-    miAudio.pause();
-    miAudio.currentTime = 0;
-    miAudio.src = '';
-}
-
-function actualizarConteo(nombre) {
-    let conteo = localStorage.getItem(nombre);
-    if (!conteo) {
-        conteo = 0;
+// Funcion que cambia el elemento de instrucciones en el html agregando y sacando la class
+function ocultarInstrucciones(button, pantalla) {
+    if (button.classList.contains('active')) {
+        toggleInstrucciones(button, pantalla);
     }
-    conteo++;
-    localStorage.setItem(nombre, conteo);
 }
 
+function toggleInstrucciones(button, pantalla) {
+    button.classList.toggle('active');
+    button.classList.toggle('inactive');
+    pantalla.classList.toggle('ocultar');
+}
+
+
+// Ejecuta la funcion para actualizar el registro de partidas ganadas o perdidas apenas abris el juego
 actualizarTextoHistorial()

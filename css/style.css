@@ -24,15 +24,15 @@ main {
 }
 
 h1 {
-    color: #ff8e00; /* Color naranja */
-    font-size: 3em; /* Tamaño de fuente grande */
-    text-align: center; /* Centramos el texto */
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para dar profundidad */
-    padding: 20px; /* Espaciado interno */
-    margin-bottom: 20px; /* Espaciado inferior */
-    font-family: 'Montserrat', sans-serif; /* Fuente elegante */
-    border-bottom: 2px solid #ff8e00; /* Línea decorativa inferior */
-    letter-spacing: 2px; /* Espaciado entre letras */
+    color: #ff8e00;
+    font-size: 3em;
+    text-align: center;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    padding: 5px 10px 20px;
+    margin: 10px 0px 10px;
+    font-family: 'Montserrat', sans-serif;
+    border-bottom: 2px solid #ff8e00;
+    letter-spacing: 2px;
 }
 
 #pantallaFinal h3 {
@@ -61,7 +61,8 @@ h2 {
     text-align: center;
 }
 
-button, #pantalla3 input[type="button"] {
+button,
+#pantalla3 input[type="button"] {
     display: block;
     width: 100%;
     padding: 10px;
@@ -84,19 +85,19 @@ input[type="button"]#submitResultado {
     display: block;
     width: 100%;
     padding: 15px;
-    margin-top: 20px; /* Espacio arriba del botón */
+    margin-top: 20px;
     font-size: 1.5em;
-    background-color: #f00; /* Color rojo para el fondo */
-    color: #fff; /* Texto en blanco */
-    border: 2px solid #f00; /* Borde rojo */
-    border-radius: 5px; /* Bordes redondeados */
+    background-color: #f00;
+    color: #fff;
+    border: 2px solid #f00;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s, color 0.3s; /* Transiciones suaves */
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
 input[type="button"]#submitResultado:hover {
-    background-color: #c00; /* Color más oscuro al pasar el ratón */
-    border-color: #c00; /* Borde más oscuro al pasar el ratón */
+    background-color: #c00;
+    border-color: #c00;
 }
 
 .ocultar {
@@ -130,7 +131,7 @@ input::placeholder {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     color: #ddd;
-    background-color: #333; /* Fondo más oscuro */
+    background-color: #333;
 }
 
 #game-content p {
@@ -141,7 +142,7 @@ input::placeholder {
 #game-content #game-historial,
 #game-content #game-Intentos,
 #game-content #game-Aciertos {
-    background-color: #444; /* Fondo común para todos */
+    background-color: #444;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -151,7 +152,7 @@ input::placeholder {
 #game-content #game-Intentos .intentos-titulo,
 #game-content #game-Aciertos .aciertos-titulo {
     font-weight: bold;
-    color: #ff8e00; /* Color naranja */
+    color: #ff8e00;
     font-size: 1.1em;
 }
 
@@ -215,7 +216,8 @@ input::placeholder {
     max-height: 100%;
 }
 
-#pantalla5, #pantalla6 {
+#pantalla5,
+#pantalla6 {
     background-color: #444;
     padding: 20px;
     border-radius: 10px;
@@ -223,7 +225,8 @@ input::placeholder {
     color: #ddd;
 }
 
-#pantalla5 h2, #pantalla6 h2 {
+#pantalla5 h2,
+#pantalla6 h2 {
     color: #fff;
 }
 
@@ -245,14 +248,14 @@ input::placeholder {
     margin: 10px 0 0 20px;
 }
 
-#pantalla5 h3, #pantalla5 h4 {
+#pantalla5 h3,
+#pantalla5 h4 {
     text-align: center;
     color: #ff0;
     margin-top: 20px;
 }
 
-#buttonRendirse, #buttonConteo {
+#buttonRendirse,
+#buttonConteo {
     background-color: #f00;
 }
-
-
