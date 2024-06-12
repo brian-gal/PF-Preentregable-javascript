@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego</title>
     <link rel="stylesheet" href="./css/style.css">
-    <script defer src="./js/logica.js"></script>
-    <script defer src="./js/dom.js"></script>
+    <script defer src="./js/jugador2.js"></script>
+    <script defer src="./js/dom2.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
@@ -26,15 +26,33 @@
             <button id="buttonPlay">Comenzar Juego</button>
         </section>
 
-        <section>
-            <div id="pantalla2" class="ocultar">
-                <h2>Elija la dificultad</h2>
-                <button>Fácil</button>
-                <button>Medio</button>
-                <button>Difícil</button>
-                <button>Personalizado</button>
+        <section id="pantalla2" class="ocultar">
+            <h2>Cantidad de jugadores</h2>
+            <button class="botones">Un Jugador</button>
+            <div id="unJugador" class="ocultar">
+                <input type="text" id="jugador" placeholder="Nombre del Jugador">
+                <p id="advertenciaJugador"></p>
+                <input type="button" id="buttonUnJugador" value="Confirmar">
             </div>
+            <button class="botones">Dos Jugadores</button>
+            <div id="dosJugadores" class="ocultar">
+                <input type="text" id="jugador1" placeholder="Nombre del Jugador 1">
+                <p id="advertenciaJugador1"></p>
+                <input type="text" id="jugador2" placeholder="Nombre del Jugador 2">
+                <p id="advertenciaJugador2"></p>
+                <input type="button" id="buttonDosJugadores" value="Confirmar">
+            </div>
+        </section>
+
+        <section>
             <div id="pantalla3" class="ocultar">
+                <h2>Elija la dificultad</h2>
+                <button class="botones">Fácil</button>
+                <button class="botones">Medio</button>
+                <button class="botones">Difícil</button>
+                <button class="botones">Personalizado</button>
+            </div>
+            <div id="pantalla4" class="ocultar">
                 <label for="cifras">¿De cuántas cifras quieres que sea el número?</label>
                 <input type="number" id="cifras" placeholder="El mínimo es 1 y el maximo 6" min="1" max="6">
                 <p id="advertenciaCifras"></p>
@@ -45,7 +63,7 @@
             </div>
         </section>
 
-        <section id="pantalla4" class="ocultar">
+        <section id="pantalla5" class="ocultar">
             <div id="game-content">
                 <h2 id="game-titulo"></h2> <!-- agrega el contenido desde el js -->
                 <p id="game-historial"></p> <!-- agrega el contenido desde el js -->
@@ -63,7 +81,7 @@
             <button id="buttonInstrucciones" class="inactive"><i class="bi bi-book"></i> Leer las Instrucciones</button>
         </div>
 
-        <section id="pantalla5" class="ocultar">
+        <section id="pantalla6" class="ocultar">
             <h2>Instrucciones:</h2>
             <p>Tu objetivo es adivinar un número aleatorio dentro de un número limitado de intentos. ¡Demuestra tu
                 habilidad para descifrar el código secreto y gana!</p>
@@ -124,11 +142,9 @@
     <footer>
         <button id="buttonRendirse" class="ocultar">Rendirse</button>
         <button id="buttonConteo">Registro de Partidas</button>
-        <section id="pantalla6" class="ocultar">
-            <h2>Historial</h2>
-            <p id="historialGanadas"></p> <!-- agrega el contenido desde el js -->
-            <p id="historialPerdidas"></p> <!-- agrega el contenido desde el js -->
-            <p id="historialRendidas"></p> <!-- agrega el contenido desde el js -->
+        <section id="pantalla7" class="ocultar">
+            <div id="contenedorHistorial" class="historial-container"></div>
+            <button id="borrarTodo">Borrar Todo el Historial</button>
         </section>
     </footer>
 
