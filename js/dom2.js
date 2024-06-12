@@ -48,10 +48,14 @@ const advertenciaJugador2 = document.getElementById('advertenciaJugador2');
 
 const img = document.getElementById('gifImg');
 const miAudio = document.getElementById('miAudio');
+const miAudioFondo = document.getElementById('miAudioFondo');
+let sonidoActivado = true;
 
 buttonPlay.addEventListener("click", function () {
     resetearJugadores()
     cambiarVisibilidad(pantalla2, pantalla1)
+    detenerAudio(miAudio)
+    reproducirAudioFondo("./assets/musicaFondo.m4a")
 });
 
 buttonCantidadJugadores.forEach((button, i) => {
@@ -59,10 +63,11 @@ buttonCantidadJugadores.forEach((button, i) => {
         cantidadJugadores = i + 1;
         if (cantidadJugadores == 1) {
             cambiarVisibilidad(pantallaUnJugador, pantallaDosJugadores)
+            jugador.focus();
         } else {
             cambiarVisibilidad(pantallaDosJugadores, pantallaUnJugador)
+            jugador1.focus();
         }
-
     });
 });
 
@@ -82,7 +87,6 @@ buttonDosJugadores.addEventListener('click', function () {
         cambiarVisibilidad(pantalla3, pantalla2)
     } else {
         advertenciaJugador1.textContent = jugador1.value.length < 9 & jugador1.value.length > 2 ? null : 'Por favor, escriba un nombre que contenga entre 3 y 8 caracteres';
-
         if (jugador2.value.length < 9 && jugador2.value.length > 2) {
             if (jugador1.value !== jugador2.value) {
                 advertenciaJugador2.textContent = null;
@@ -100,13 +104,12 @@ buttonDificultad.forEach((button, i) => {
     button.addEventListener("click", function () {
         cifras = i + 2;
         if (cifras != 5) {
-
             cambiarVisibilidad(pantalla5, pantalla3)
             cambiarVisibilidadbutton(buttonConteo)
             cantidadJugadores == 1 ? creandoNumeroAdivinar() : null;
             actualizarDesdeHasta()
             actualizarTexto(player1, player2)
-
+            inputResultado.focus();
         } else {
             cambiarVisibilidad(pantalla4, pantalla3)
         }
@@ -124,7 +127,7 @@ buttonPersonalizado.addEventListener("click", function () {
         actualizarDesdeHasta()
         actualizarTexto(player1, player2)
         cambiarVisibilidad(pantalla5, pantalla4)
-        document.getElementById('resultado').focus();
+        inputResultado.focus();
         cambiarVisibilidadbutton(buttonConteo)
     } else {
         // Valida las entradas personalizadas del usuario
@@ -133,17 +136,10 @@ buttonPersonalizado.addEventListener("click", function () {
     }
 });
 
-buttonResultado.addEventListener("click", function () {
-    if (cantidadJugadores == 1) {
-        procesarResultado(player1, player2)
-    } else {
-        if (turnoJugador == 1) {
-            procesarResultado(player1, player2)
-        } else {
-            procesarResultado(player2, player1)
-        }
-    }
-    player1.historial.length == 2 ? cambiarVisibilidadbutton(buttonRendirse) : null;
+buttonResultado.addEventListener("click", manejarResultado);
+
+inputResultado.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') manejarResultado();
 });
 
 buttonInstrucciones.addEventListener("click", function () {
@@ -168,6 +164,8 @@ buttonBorrarTodo.addEventListener("click", function () {
     localStorage.clear();
     mostrarHistorialJugadores();
 });
+
+document.getElementById("buttonSilenciar").addEventListener("click", alternarSonido);
 
 // Funcion que muestra y oculta elementos del html agregando y sacando la class
 function cambiarVisibilidad(mostrar, ocultar) {
@@ -207,11 +205,12 @@ function actualizarTexto(turno, contrario) {
         gameIntentos.textContent = `Intentos Disponibles: ${turno.maxIntentos - turno.intentos}`;
         gameAciertos.textContent = turno.aciertos ? `Pista: ${turno.aciertos} ${turno.aciertos > 1 ? 'cifras estan' : 'cifra esta'} en su posicion y ${turno.numeroAdivinar.length - turno.aciertos} ${turno.numeroAdivinar.length - turno.aciertos > 1 ? 'estan' : 'esta'} mal` : 'Pista: Ninguna cifra esta en su posicion correcta';
     } else if (contrario.numeroAdivinar.length == 0 && cantidadJugadores == 2) {
-        gameTitulo.textContent = `${turno.name} escribi el numero que va a tener que adivinar ${contrario.name}`;
+        gameTitulo.textContent = `Turno de ${turno.name}`;
         gameHistorial.textContent = `Escribi un número entre ${desde} y ${hasta} sin que nadie te vea`;
-        gameIntentos.textContent = `Turno de ${turno.name}`;
+        gameIntentos.textContent = `${turno.name} escribi el numero que va a tener que adivinar ${contrario.name}`;
         gameAciertos.textContent = `Cuando termines, toca el boton confirmar`;
     } else {
+        inputResultado.placeholder = `Ingresa un número entre ${desde} y ${hasta} para adivinar el número de tu oponente`;
         gameTitulo.textContent = `Turno de ${turno.name}`;
         gameHistorial.textContent = turno.historial.length ? `Historial: ${turno.historial.join(', ')}` : 'El historial se encuentra vacio';
         gameIntentos.textContent = `Intentos Disponibles: ${turno.maxIntentos - turno.intentos}`;
@@ -290,6 +289,7 @@ function borrarHistorial(nombre) {
 function mostrarMensajeFinal(mensaje, mensaje2, audioSrc, imgSrc) {
     pantallaFinal.innerHTML = `<h2>${mensaje2}</h2><h3>${mensaje}</h3>`;
     cambiarVisibilidad(pantalla1, pantalla5);
+    detenerAudio(miAudioFondo)
     buttonPlay.textContent = 'Jugar de nuevo';
     reproducirAudio(audioSrc);
     img.src = imgSrc;

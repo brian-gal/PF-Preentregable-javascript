@@ -14,12 +14,12 @@
 <body>
     <header>
         <h1>"Un Acierto" - Juego de Adivinanzas</h1>
+        <button id="buttonSilenciar" class="btn btn-link btn-volumen"><i id="iconoVolumen" class="bi bi-volume-up"></i>
+        </button>
     </header>
     <main>
-
         <section id="pantalla1">
             <div id="pantallaFinal"></div>
-            <audio id="miAudio" src="" preload="auto"></audio> <!-- agrega la ruta desde el js -->
             <div class="gift">
                 <img id="gifImg" src=""> <!-- agrega la ruta desde el js -->
             </div>
@@ -71,7 +71,7 @@
                 <p id="game-Aciertos"></p> <!-- agrega el contenido desde el js -->
             </div>
             <div>
-                <input type="number" id="resultado" placeholder="Ingrese un numero">
+                <input type="number" id="resultado" placeholder="Ingrese un numero aca">
                 <p id="advertenciaResultado"></p> <!-- agrega el contenido desde el js -->
                 <input type="button" id="submitResultado" value="Confirmar">
             </div>
@@ -146,6 +146,8 @@
             <div id="contenedorHistorial" class="historial-container"></div>
             <button id="borrarTodo">Borrar Todo el Historial</button>
         </section>
+        <audio id="miAudio" src="" preload="auto"></audio> <!-- agrega la ruta desde el js -->
+        <audio id="miAudioFondo" src="" preload="auto"></audio> <!-- agrega la ruta desde el js -->
     </footer>
 
 </body>

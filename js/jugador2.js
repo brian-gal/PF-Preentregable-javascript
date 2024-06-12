@@ -1,4 +1,6 @@
 let cantidadJugadores;
+miAudio.volume = 0.4;
+miAudioFondo.volume = 0.1;
 let turnoJugador = 1
 let desde;
 let hasta;
@@ -58,6 +60,19 @@ function creandoNumeroAdivinar() {
         if (player1.numeroAdivinar.length === 0 && num === 0) continue;
         player1.numeroAdivinar.push(num);
     }
+}
+
+function manejarResultado() {
+    if (cantidadJugadores == 1) {
+        procesarResultado(player1, player2)
+    } else {
+        if (turnoJugador == 1) {
+            procesarResultado(player1, player2)
+        } else {
+            procesarResultado(player2, player1)
+        }
+    }
+    player1.historial.length == 2 ? cambiarVisibilidadbutton(buttonRendirse) : null;
 }
 
 // Función para procesar el resultado ingresado por el usuario
@@ -129,14 +144,40 @@ function actualizarConteo(nombre, tipo) {
 }
 
 function reproducirAudio(src) {
-    miAudio.volume = 0.5;
     miAudio.src = src;
     miAudio.play();
 }
 
-function detenerAudio() {
-    miAudio.pause();
-    miAudio.currentTime = 0;
-    miAudio.src = '';
+function reproducirAudioFondo(src) {
+    miAudioFondo.src = src;
+    miAudioFondo.addEventListener('ended', function () {
+        // Reinicia la reproducción cuando el audio termina
+        miAudioFondo.currentTime = 0;
+        miAudioFondo.play();
+    });
+
+    miAudioFondo.play();
+}
+
+function detenerAudio(id) {
+    id.pause();
+    id.currentTime = 0;
+    id.src = '';
+}
+
+function alternarSonido() {
+    if (sonidoActivado) {
+        miAudio.volume = 0;
+        miAudioFondo.volume = 0;
+        document.getElementById("iconoVolumen").classList.remove("bi-volume-up");
+        document.getElementById("iconoVolumen").classList.add("bi-volume-mute");
+        sonidoActivado = false;
+    } else {
+        miAudio.volume = 0.4;
+        miAudioFondo.volume = 0.2;
+        document.getElementById("iconoVolumen").classList.remove("bi-volume-mute");
+        document.getElementById("iconoVolumen").classList.add("bi-volume-up");
+        sonidoActivado = true;
+    }
 }
 
