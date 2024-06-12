@@ -93,6 +93,7 @@ function procesarResultado(turno, contrario) {
         actualizarTexto(contrario, turno)
         turnoJugador == 2 ? turnoJugador = 1 : turnoJugador = 2;
         advertenciaResultado.textContent = ``;
+        inputResultado.value = '';
     }
     else {
         analizarEntrada(turno);
