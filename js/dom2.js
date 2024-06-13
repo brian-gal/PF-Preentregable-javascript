@@ -49,6 +49,8 @@ const advertenciaJugador2 = document.getElementById('advertenciaJugador2');
 const img = document.getElementById('gifImg');
 const miAudio = document.getElementById('miAudio');
 const miAudioFondo = document.getElementById('miAudioFondo');
+miAudio.volume = 0.4;
+miAudioFondo.volume = 0.1;
 let sonidoActivado = true;
 
 buttonPlay.addEventListener("click", function () {
@@ -73,7 +75,7 @@ buttonCantidadJugadores.forEach((button, i) => {
 
 buttonUnJugador.addEventListener('click', function () {
     if (jugador.value.length < 9 & jugador.value.length > 2) {
-        player1.name = jugador.value
+        player1.name = jugador.value.toUpperCase()
         cambiarVisibilidad(pantalla3, pantalla2)
     } else {
         advertenciaJugador.textContent = jugador.value.length < 9 & jugador.value.length > 2 ? jugador.focus() : 'Por favor, escriba un nombre que contenga entre 3 y 8 caracteres';
@@ -82,8 +84,8 @@ buttonUnJugador.addEventListener('click', function () {
 
 buttonDosJugadores.addEventListener('click', function () {
     if (jugador1.value.length < 9 & jugador1.value.length > 2 && jugador2.value.length < 9 && jugador2.value.length > 2 && jugador1.value != jugador2.value) {
-        player1.name = jugador1.value
-        player2.name = jugador2.value
+        player1.name = jugador1.value.toUpperCase()
+        player2.name = jugador2.value.toUpperCase()
         cambiarVisibilidad(pantalla3, pantalla2)
     } else {
         advertenciaJugador1.textContent = jugador1.value.length < 9 & jugador1.value.length > 2 ? null : 'Por favor, escriba un nombre que contenga entre 3 y 8 caracteres';
@@ -293,11 +295,13 @@ function mostrarMensajeFinal(mensaje, mensaje2, audioSrc, imgSrc) {
     buttonPlay.textContent = 'Jugar de nuevo';
     reproducirAudio(audioSrc);
     img.src = imgSrc;
-    cambiarVisibilidadbutton(buttonRendirse)
+    botonRendirseActivado == true ? cambiarVisibilidadbutton(buttonRendirse) : null;
     cambiarVisibilidadbutton(buttonConteo)
 }
+
 
 function actualizarDesdeHasta() {
     desde = Math.pow(10, cifras - 1);
     hasta = Math.pow(10, cifras) - 1;
 }
+

@@ -1,6 +1,5 @@
 let cantidadJugadores;
-miAudio.volume = 0.4;
-miAudioFondo.volume = 0.1;
+let botonRendirseActivado = false
 let turnoJugador = 1
 let desde;
 let hasta;
@@ -72,7 +71,12 @@ function manejarResultado() {
             procesarResultado(player2, player1)
         }
     }
-    player1.historial.length == 2 ? cambiarVisibilidadbutton(buttonRendirse) : null;
+    if (player1.historial.length == 2) {
+        cambiarVisibilidadbutton(buttonRendirse)
+        botonRendirseActivado = true
+    } else {
+        null
+    }
 }
 
 // Función para procesar el resultado ingresado por el usuario
@@ -94,7 +98,7 @@ function procesarResultado(turno, contrario) {
         analizarEntrada(turno);
         verificarFinalJuego(turno);
         advertenciaResultado.textContent = ``;
-
+        inputResultado.value = '';
         if (turnoJugador == 1 && cantidadJugadores == 2) {
             actualizarTexto(player2, player1)
             turnoJugador = 2
@@ -104,7 +108,6 @@ function procesarResultado(turno, contrario) {
             turnoJugador = 1
         }
     }
-    inputResultado.value = '';
     inputResultado.focus();
 }
 

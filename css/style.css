@@ -112,7 +112,8 @@ h2 {
 
 
 #buttonDosJugadores,
-#buttonUnJugador {
+#buttonUnJugador,
+#buttonPersonalizado {
     padding: 10px;
     font-size: 1em;
     background-color: #f00;
