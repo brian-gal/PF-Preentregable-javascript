@@ -46,12 +46,15 @@ const advertenciaJugador = document.getElementById('advertenciaJugador');
 const advertenciaJugador1 = document.getElementById('advertenciaJugador1');
 const advertenciaJugador2 = document.getElementById('advertenciaJugador2');
 
+// Variables para audios y videos
+const buttonSilenciar = document.getElementById("buttonSilenciar")
 const img = document.getElementById('gifImg');
 const miAudio = document.getElementById('miAudio');
 const miAudioFondo = document.getElementById('miAudioFondo');
-miAudio.volume = 0.4;
-miAudioFondo.volume = 0.1;
 let sonidoActivado = true;
+
+//eventos
+buttonSilenciar.addEventListener("click", alternarSonido);
 
 buttonPlay.addEventListener("click", function () {
     resetearJugadores()
@@ -139,14 +142,12 @@ buttonPersonalizado.addEventListener("click", function () {
 });
 
 buttonResultado.addEventListener("click", manejarResultado);
-
 inputResultado.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') manejarResultado();
 });
 
 buttonInstrucciones.addEventListener("click", function () {
     toggleInstrucciones(buttonInstrucciones, pantalla6);
-    console.log(turnoJugador)
 });
 
 buttonRendirse.addEventListener("click", function () {
@@ -167,39 +168,19 @@ buttonBorrarTodo.addEventListener("click", function () {
     mostrarHistorialJugadores();
 });
 
-document.getElementById("buttonSilenciar").addEventListener("click", alternarSonido);
-
-// Funcion que muestra y oculta elementos del html agregando y sacando la class
-function cambiarVisibilidad(mostrar, ocultar) {
-    ocultar.classList.add('ocultar');
-    mostrar.classList.remove('ocultar');
-    ocultainstrucciones(pantalla6)
-    ocultainstrucciones(pantalla7)
+// Función para mostrar un mensaje final en el DOM al finalizar el juego
+function mostrarMensajeFinal(mensaje, mensaje2, audioSrc, imgSrc) {
+    pantallaFinal.innerHTML = `<h2>${mensaje2}</h2><h3>${mensaje}</h3>`;
+    cambiarVisibilidad(pantalla1, pantalla5);
+    detenerAudio(miAudioFondo)
+    buttonPlay.textContent = 'Jugar de nuevo';
+    reproducirAudio(audioSrc);
+    img.src = imgSrc;
+    cambiarVisibilidadbutton(buttonRendirse) 
+    cambiarVisibilidadbutton(buttonConteo)
 }
 
-// Función que alterna las clases del botón e instrucciones
-function toggleInstrucciones(button, pantalla) {
-    if (pantalla.classList.contains('ocultar')) {
-        pantalla.classList.remove('ocultar');
-        button.classList.add('active');
-        button.classList.remove('inactive');
-    } else {
-        ocultainstrucciones(pantalla)
-    }
-}
-
-function ocultainstrucciones(pantalla) {
-    pantalla.classList.add('ocultar');
-}
-
-function cambiarVisibilidadbutton(button) {
-    if (button.classList.contains('ocultar')) {
-        button.classList.remove('ocultar');
-    } else {
-        button.classList.add('ocultar');
-    }
-}
-
+// funcion que actualiza el texto al jugar en base al turno
 function actualizarTexto(turno, contrario) {
     if (cantidadJugadores == 1) {
         gameTitulo.textContent = `Escribi un número entre ${desde} y ${hasta}`;
@@ -220,24 +201,8 @@ function actualizarTexto(turno, contrario) {
     }
 
 }
-// leo adivina el 35
-//brian adivina el 11
-// Función para obtener todos los registros de jugadores desde localStorage
-function obtenerHistorialJugadores() {
-    let historial = {};
-    for (let i = 0; i < localStorage.length; i++) {
-        let clave = localStorage.key(i);
-        if (clave.includes('_ganadas') || clave.includes('_perdidas') || clave.includes('_rendidas')) {
-            let [nombre, tipo] = clave.split('_');
-            if (!historial[nombre]) {
-                historial[nombre] = { ganadas: 0, perdidas: 0, rendidas: 0 };
-            }
-            historial[nombre][tipo] = parseInt(localStorage.getItem(clave));
-        }
-    }
-    return historial;
-}
 
+//funcion que actualiza el historial una vez que los obtuve del localStorage
 function mostrarHistorialJugadores() {
     let historial = obtenerHistorialJugadores();
     let contenedorHistorial = document.getElementById('contenedorHistorial');
@@ -278,6 +243,22 @@ function mostrarHistorialJugadores() {
     }
 }
 
+// Función para obtener todos los registros de jugadores desde localStorage
+function obtenerHistorialJugadores() {
+    let historial = {};
+    for (let i = 0; i < localStorage.length; i++) {
+        let clave = localStorage.key(i);
+        if (clave.includes('_ganadas') || clave.includes('_perdidas') || clave.includes('_rendidas')) {
+            let [nombre, tipo] = clave.split('_');
+            if (!historial[nombre]) {
+                historial[nombre] = { ganadas: 0, perdidas: 0, rendidas: 0 };
+            }
+            historial[nombre][tipo] = parseInt(localStorage.getItem(clave));
+        }
+    }
+    return historial;
+}
+
 // Función para borrar todo el historial de un jugador
 function borrarHistorial(nombre) {
     localStorage.removeItem(`${nombre}_ganadas`);
@@ -286,22 +267,32 @@ function borrarHistorial(nombre) {
     mostrarHistorialJugadores(); // Actualizar el historial en el DOM después de borrar
 }
 
-
-// Función para mostrar un mensaje final en el DOM al finalizar el juego
-function mostrarMensajeFinal(mensaje, mensaje2, audioSrc, imgSrc) {
-    pantallaFinal.innerHTML = `<h2>${mensaje2}</h2><h3>${mensaje}</h3>`;
-    cambiarVisibilidad(pantalla1, pantalla5);
-    detenerAudio(miAudioFondo)
-    buttonPlay.textContent = 'Jugar de nuevo';
-    reproducirAudio(audioSrc);
-    img.src = imgSrc;
-    botonRendirseActivado == true ? cambiarVisibilidadbutton(buttonRendirse) : null;
-    cambiarVisibilidadbutton(buttonConteo)
+// Funciones que muestran y ocultan elementos del html agregando y sacando la class
+function cambiarVisibilidad(mostrar, ocultar) {
+    ocultar.classList.add('ocultar');
+    mostrar.classList.remove('ocultar');
+    ocultainstrucciones(pantalla6)
+    ocultainstrucciones(pantalla7)
 }
 
-
-function actualizarDesdeHasta() {
-    desde = Math.pow(10, cifras - 1);
-    hasta = Math.pow(10, cifras) - 1;
+function toggleInstrucciones(button, pantalla) {
+    if (pantalla.classList.contains('ocultar')) {
+        pantalla.classList.remove('ocultar');
+        button.classList.add('active');
+        button.classList.remove('inactive');
+    } else {
+        ocultainstrucciones(pantalla)
+    }
 }
 
+function ocultainstrucciones(pantalla) {
+    pantalla.classList.add('ocultar');
+}
+
+function cambiarVisibilidadbutton(button) {
+    if (button.classList.contains('ocultar')) {
+        button.classList.remove('ocultar');
+    } else {
+        button.classList.add('ocultar');
+    }
+}

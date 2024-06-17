@@ -61,6 +61,7 @@ function creandoNumeroAdivinar() {
     }
 }
 
+//dependiendo el turno es que datos maneja
 function manejarResultado() {
     if (cantidadJugadores == 1) {
         procesarResultado(player1, player2)
@@ -71,12 +72,6 @@ function manejarResultado() {
             procesarResultado(player2, player1)
         }
     }
-    if (player1.historial.length == 2) {
-        cambiarVisibilidadbutton(buttonRendirse)
-        botonRendirseActivado = true
-    } else {
-        null
-    }
 }
 
 // Función para procesar el resultado ingresado por el usuario
@@ -84,18 +79,28 @@ function procesarResultado(turno, contrario) {
 
     turno.resultado = inputResultado.value;
 
+    //verifica los datos ingresados
     if (turno.resultado > hasta || turno.resultado < desde) {
         advertenciaResultado.textContent = `Por favor, escriba un numero entre ${desde} y ${hasta}`;
     } else if (turno.historial.includes(turno.resultado)) {
         advertenciaResultado.textContent = `Ese numero ya existe en el historial, por favor, escriba otro numero entre ${desde} y ${hasta}`;
-    } else if (contrario.numeroAdivinar.length == 0 && cantidadJugadores == 2) {
+    } 
+    //verifica si son dos jugadores y de cerlo le pregunta que numero tiene que adivinar su oponente
+    else if (contrario.numeroAdivinar.length == 0 && cantidadJugadores == 2) { 
         contrario.numeroAdivinar = Array.from(turno.resultado).map(Number);
         actualizarTexto(contrario, turno)
-        turnoJugador == 2 ? turnoJugador = 1 : turnoJugador = 2;
+        turnoJugador == 2 ? turnoJugador = 1 : turnoJugador = 2;    //solo una vez que ambos ingresaron el numero a elegir el oponente, reinicia los turnos en 1
         advertenciaResultado.textContent = ``;
         inputResultado.value = '';
     }
+    // logica del juego donde compara y aumenta los turnos.
     else {
+        if (botonRendirseActivado == false) {
+            botonRendirseActivado = true
+            cambiarVisibilidadbutton(buttonRendirse)
+        } else {
+            null
+        }
         analizarEntrada(turno);
         verificarFinalJuego(turno);
         advertenciaResultado.textContent = ``;
@@ -104,7 +109,6 @@ function procesarResultado(turno, contrario) {
             actualizarTexto(player2, player1)
             turnoJugador = 2
         } else {
-
             actualizarTexto(player1, player2)
             turnoJugador = 1
         }
@@ -112,7 +116,7 @@ function procesarResultado(turno, contrario) {
     inputResultado.focus();
 }
 
-// Función para analizar la entrada del usuario y actualizar el historial
+// Función analizar los datos ingresados
 function analizarEntrada(turno) {
     turno.resultadoAnalizar = turno.resultado.split('').map(Number);
     turno.historial.push(turno.resultado);
@@ -137,7 +141,13 @@ function rendirse(turno) {
     actualizarConteo(turno.name, 'rendidas');
 }
 
-// Función para actualizar el conteo de partidas ganadas o perdidas en el almacenamiento local
+//en base a las cifras actualiza de que numero a que numero es cada variable
+function actualizarDesdeHasta() {
+    desde = Math.pow(10, cifras - 1);
+    hasta = Math.pow(10, cifras) - 1;
+}
+
+//cada vez que gana o pierde lo guarda en el storage
 function actualizarConteo(nombre, tipo) {
     let conteo = localStorage.getItem(`${nombre}_${tipo}`);
     if (!conteo) {
@@ -147,19 +157,20 @@ function actualizarConteo(nombre, tipo) {
     localStorage.setItem(`${nombre}_${tipo}`, conteo);
 }
 
+//funciones que manejan el audio
 function reproducirAudio(src) {
     miAudio.src = src;
+    miAudio.volume = 0.4;
     miAudio.play();
 }
 
 function reproducirAudioFondo(src) {
     miAudioFondo.src = src;
     miAudioFondo.addEventListener('ended', function () {
-        // Reinicia la reproducción cuando el audio termina
         miAudioFondo.currentTime = 0;
         miAudioFondo.play();
     });
-
+    miAudioFondo.volume = 0.3;
     miAudioFondo.play();
 }
 
@@ -178,7 +189,7 @@ function alternarSonido() {
         sonidoActivado = false;
     } else {
         miAudio.volume = 0.4;
-        miAudioFondo.volume = 0.2;
+        miAudioFondo.volume = 0.3;
         document.getElementById("iconoVolumen").classList.remove("bi-volume-mute");
         document.getElementById("iconoVolumen").classList.add("bi-volume-up");
         sonidoActivado = true;
