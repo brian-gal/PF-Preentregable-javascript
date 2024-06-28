@@ -176,7 +176,7 @@ function mostrarMensajeFinal(mensaje, mensaje2, audioSrc, imgSrc) {
     buttonPlay.textContent = 'Jugar de nuevo';
     reproducirAudio(audioSrc);
     img.src = imgSrc;
-    cambiarVisibilidadbutton(buttonRendirse) 
+    buttonRendirse.classList.add('ocultar');
     cambiarVisibilidadbutton(buttonConteo)
 }
 

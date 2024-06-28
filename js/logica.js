@@ -84,9 +84,9 @@ function procesarResultado(turno, contrario) {
         advertenciaResultado.textContent = `Por favor, escriba un numero entre ${desde} y ${hasta}`;
     } else if (turno.historial.includes(turno.resultado)) {
         advertenciaResultado.textContent = `Ese numero ya existe en el historial, por favor, escriba otro numero entre ${desde} y ${hasta}`;
-    } 
+    }
     //verifica si son dos jugadores y de cerlo le pregunta que numero tiene que adivinar su oponente
-    else if (contrario.numeroAdivinar.length == 0 && cantidadJugadores == 2) { 
+    else if (contrario.numeroAdivinar.length == 0 && cantidadJugadores == 2) {
         contrario.numeroAdivinar = Array.from(turno.resultado).map(Number);
         actualizarTexto(contrario, turno)
         turnoJugador == 2 ? turnoJugador = 1 : turnoJugador = 2;    //solo una vez que ambos ingresaron el numero a elegir el oponente, reinicia los turnos en 1
@@ -195,4 +195,3 @@ function alternarSonido() {
         sonidoActivado = true;
     }
 }
-
